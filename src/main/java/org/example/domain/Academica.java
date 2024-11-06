@@ -39,8 +39,9 @@ public class Academica {
     public void setTitulo(String titulo) {
         this.titulo = titulo;
     }
-    @Override
+    
     public String toString() {
         return funcionario.getNombres();
     }
 }
+
