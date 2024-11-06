@@ -27,10 +27,10 @@ public class FamiliaDao {
             while (resultSet.next()) {
                 Familia familia = new Familia();
                 familia.setId_familiar(resultSet.getInt("id_familiar"));
-                familia.setId_funcionario(resultSet.getInt("id_funcionario"));
-                familia.setNombreFamiliar(resultSet.getString("nombre_familiar"));
+                
+                familia.setNombre_familiar(resultSet.getString("nombre_familiar"));
                 familia.setRelacion(resultSet.getString("relacion"));
-                familia.setTelefonoFamiliar(resultSet.getString("telefono_familiar"));
+                familia.setTelefono_familiar(resultSet.getString("telefono_familiar"));
                 
                 Funcionario funcionario = new Funcionario();
                 funcionario.setId(resultSet.getInt("id"));

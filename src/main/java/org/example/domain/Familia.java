@@ -5,7 +5,7 @@ public class Familia {
     private Funcionario funcionario;
     private String nombre_familiar;
     private String relacion;
-    private int telefono_familiar;
+    private String telefono_familiar;
 
     public int getId_familiar() {
         return id_familiar;
@@ -15,11 +15,11 @@ public class Familia {
         this.id_familiar = id_familiar;
     }
 
-    public Funcionario getId() {
+    public Funcionario getFuncionario() {
         return funcionario;
     }
 
-    public void setId(Funcionario funcionario) {
+    public void setFuncionario(Funcionario funcionario) {
         this.funcionario = funcionario;
     }
 
@@ -39,16 +39,18 @@ public class Familia {
         this.relacion = relacion;
     }
 
-    public int getTelefono_familiar() {
-        return telefono_familiar;
-    }
+    
 
-    public void setTelefono_familiar(int telefono_familiar) {
-        this.telefono_familiar = telefono_familiar;
-    }
-
-    @Override
     public String toString (){
         return funcionario.getNombres();
     }
+
+    public String getTelefono_familiar() {
+        return telefono_familiar;
+    }
+
+    public void setTelefono_familiar(String telefono_familiar) {
+        this.telefono_familiar = telefono_familiar;
+    }
+
 }

@@ -13,7 +13,7 @@ public class FamiliaController {
         familiaDao = new FamiliaDao();
     }
 
-    public List<Familia> listarAcademica() throws SQLException {
+    public List<Familia> listarFamilia() throws SQLException {
         return familiaDao.getAllFamilias();
     }
 }

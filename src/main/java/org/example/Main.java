@@ -2,8 +2,11 @@ package org.example;
 
 import org.example.controller.FuncionarioController;
 import org.example.controller.AcademicaController;
+import org.example.controller.FamiliaController;
 import org.example.domain.Funcionario;
 import org.example.domain.Academica;
+import org.example.domain.Familia;
+
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -17,8 +20,10 @@ public class Main extends JFrame {
 
     private final FuncionarioController funcionarioController;
     private final AcademicaController academicaController;
+    private final FamiliaController familiaController;
     private final static String[] FUNCIONARIO_COLUMNS = {"ID", "TIPO IDENTIFICACION", "NUMERO IDENTIFICACION", "NOMBRES", "APELLIDOS", "ESTADO CIVIL", "SEXO", "DIRECCION", "TELEFONO", "FECHA NACIMIENTO"};
-    private final static String[] ACADEMICA_COLUMNS = {"ID", "NUMERO IDENTIFICACION", "UNIVERSIDAD", "NIVEL ESTUDIO", "TITULO"};
+    private final static String[] ACADEMICA_COLUMNS = {"ID", "NOMBRE FUNCIONARIO", "UNIVERSIDAD", "NIVEL ESTUDIO", "TITULO"};
+    private final static String[] FAMILIA_COLUMNS = {"ID","NOMBRE FUNCIONARIO",  "NOMBRE FAMILIAR", "RELACION", "TELEFONO FAMILIAR"};
     private final static String SELECCIONE = "--SELECCIONE--";
 
     private JLabel jLabel1;
@@ -51,6 +56,7 @@ public class Main extends JFrame {
     public Main() {
         funcionarioController = new FuncionarioController();
         academicaController = new AcademicaController();
+        familiaController = new FamiliaController();
         initComponents();
     }
 
@@ -61,14 +67,17 @@ public class Main extends JFrame {
         JPanel mainPanel = new JPanel(new GridLayout(3, 1, 10, 10));
         JButton btnFuncionarios = new JButton("Ver Funcionarios");
         JButton btnAcademica = new JButton("Ver Información Académica");
+        JButton btnFamiliar = new JButton("Ver Información Familiar");
         JButton btnSalir = new JButton("Salir");
 
         btnFuncionarios.addActionListener(e -> mostrarFuncionarios());
         btnAcademica.addActionListener(e -> mostrarAcademica());
+        btnFamiliar.addActionListener(e -> mostrarFamiliar());
         btnSalir.addActionListener(e -> System.exit(0));
 
         mainPanel.add(btnFuncionarios);
         mainPanel.add(btnAcademica);
+        mainPanel.add(btnFamiliar);
         mainPanel.add(btnSalir);
 
         add(mainPanel, BorderLayout.CENTER);
@@ -181,6 +190,8 @@ public class Main extends JFrame {
         addListener();
     }
 
+    // MOSTRAR ACADEMICAAAAAAA
+
     private void mostrarAcademica() {
         JFrame frame = new JFrame("Información Académica");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -263,6 +274,52 @@ public class Main extends JFrame {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void mostrarFamiliar() {
+        JFrame frame = new JFrame("Información Familiar");
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setLayout(new BorderLayout());
+
+        JLabel jLabel3 = new JLabel("INFORMACIÓN FAMILIAR");
+        JPanel topPanel = new JPanel(new FlowLayout());
+        topPanel.add(jLabel3);
+        frame.add(topPanel, BorderLayout.NORTH);
+
+        JTable tblFamiliar = new JTable();
+        DefaultTableModel defaultTableModel = new DefaultTableModel();
+        for (String COLUMN : FAMILIA_COLUMNS) {
+            defaultTableModel.addColumn(COLUMN);
+        }
+        tblFamiliar.setModel(defaultTableModel);
+
+        try {
+            List<Familia> familias = familiaController.listarFamilia();
+            if (familias.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "No hay información familiar registrada");
+            } else {
+                familias.forEach(familia -> {
+                    Object[] row = new Object[5];
+                    row[0] = familia.getId_familiar();
+                    row[1] = familia.getFuncionario().getNombres();
+                    row[2] = familia.getNombre_familiar();
+                    row[3] = familia.getRelacion();
+                    row[4] = familia.getTelefono_familiar();
+                    defaultTableModel.addRow(row);
+                });
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        JPanel bottomPanel = new JPanel(new BorderLayout());
+        bottomPanel.setBorder(BorderFactory.createTitledBorder("Lista de Información Familiar"));
+        bottomPanel.add(new JScrollPane(tblFamiliar), BorderLayout.CENTER);
+        frame.add(bottomPanel, BorderLayout.CENTER);
+
+        frame.pack();
+        frame.setLocationRelativeTo(null); // Centrar la ventana
+        frame.setVisible(true);
     }
 
     private void addListener() {
