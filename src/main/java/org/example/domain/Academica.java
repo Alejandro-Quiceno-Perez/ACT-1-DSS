@@ -2,8 +2,7 @@ package org.example.domain;
 
 public class Academica {
     private int id_educacion;
-    private Funcionario id;
-    private int numeroIdentificacion;
+    private Funcionario funcionario;
     private String universidad;
     private String nivel_estudio;
     private String titulo;
@@ -15,18 +14,13 @@ public class Academica {
     public void setId_educacion(int id_educacion) {
         this.id_educacion = id_educacion;
     }
-    public Funcionario getId() {
-        return id;
+    public Funcionario getFuncionario() {
+        return funcionario;
     }
-    public void setId(Funcionario id) {
-        this.id = id;
+    public void setFuncionario(Funcionario funcionario) {
+        this.funcionario = funcionario;
     }
-    public int getNumeroIdentificacion() {
-        return numeroIdentificacion;
-    }
-    public void setNumeroIdentificacion(int numeroIdentificacion) {
-        this.numeroIdentificacion = numeroIdentificacion;
-    }
+
     public String getUniversidad() {
         return universidad;
     }
@@ -44,5 +38,9 @@ public class Academica {
     }
     public void setTitulo(String titulo) {
         this.titulo = titulo;
+    }
+    @Override
+    public String toString() {
+        return funcionario.getNombres();
     }
 }

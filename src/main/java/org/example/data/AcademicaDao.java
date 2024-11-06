@@ -6,21 +6,18 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
-
 import org.example.domain.Academica;
 import org.example.domain.Funcionario;
 import org.example.util.ConnectionUtil;
 
 public class AcademicaDao {
-    private static final String GET_ACADEMICA = "select * from InformacionAcademica;";
+    private static final String GET_ACADEMICA = "select * from InformacionAcademica Inner join Funcionario on funcionario.id = informacionacademica.id_funcionario;";
 
     public List<Academica> getAllAcademicas() throws SQLException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         List<Academica> academicaList = new ArrayList<>();
-        List<Funcionario> funcionarioList = new ArrayList<>();
 
         try {
             connection = ConnectionUtil.getConnection();
@@ -30,12 +27,16 @@ public class AcademicaDao {
             while (resultSet.next()) {
                 Academica academica = new Academica();
                 academica.setId_educacion(resultSet.getInt("id_educacion"));
-                academica.setId(new Funcionario(resultSet.getInt("id")));
-                academica.setNumeroIdentificacion(resultSet.getInt("numeroIdentificacion"));
                 academica.setUniversidad(resultSet.getString("universidad"));
                 academica.setNivel_estudio(resultSet.getString("nivel_estudio"));
                 academica.setTitulo(resultSet.getString("titulo"));
 
+                Funcionario funcionario = new Funcionario();
+                funcionario.setId(resultSet.getInt("id"));
+                funcionario.setNombres(resultSet.getString("nombres"));
+                funcionario.setApellidos(resultSet.getString("apellidos"));
+
+                academica.setFuncionario(funcionario);
                 academicaList.add(academica);
             }
 

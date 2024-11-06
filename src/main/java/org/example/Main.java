@@ -196,18 +196,17 @@ public class Main extends JFrame {
         for (String COLUMN : ACADEMICA_COLUMNS) {
             defaultTableModel.addColumn(COLUMN);
         }
-
         tblAcademica.setModel(defaultTableModel);
 
         try {
             List<Academica> academicas = academicaController.listarAcademica();
             if (academicas.isEmpty()) {
-                JOptionPane.showMessageDialog(frame, "No hay información académica registrada");
+                JOptionPane.showMessageDialog(this, "No hay información académica registrada");
             } else {
                 academicas.forEach(academica -> {
                     Object[] row = new Object[5];
-                    row[0] = academica.getId();
-                    row[1] = academica.getNumeroIdentificacion();
+                    row[0] = academica.getId_educacion();
+                    row[1] = academica.getFuncionario().getNombres();
                     row[2] = academica.getUniversidad();
                     row[3] = academica.getNivel_estudio();
                     row[4] = academica.getTitulo();
@@ -218,7 +217,10 @@ public class Main extends JFrame {
             e.printStackTrace();
         }
 
-        frame.add(new JScrollPane(tblAcademica), BorderLayout.CENTER);
+        JPanel bottomPanel = new JPanel(new BorderLayout());
+        bottomPanel.setBorder(BorderFactory.createTitledBorder("Lista de Información Académica"));
+        bottomPanel.add(new JScrollPane(tblAcademica), BorderLayout.CENTER);
+        frame.add(bottomPanel, BorderLayout.CENTER);
 
         frame.pack();
         frame.setLocationRelativeTo(null); // Centrar la ventana
