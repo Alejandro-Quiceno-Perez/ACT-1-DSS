@@ -14,7 +14,3 @@ public class ConnectionUtil {
         return DriverManager.getConnection(URL, USER, PASSWORD);
     }
 }
-
-// jdbc:mysql://localhost:3306/actividad1_iud
-// root 
-// alejo9905
