@@ -9,6 +9,10 @@ import org.example.domain.Academica;
 public class AcademicaController {
     private AcademicaDao academicaDao;
 
+    public AcademicaController() {
+        academicaDao = new AcademicaDao();
+    }
+
     public List<Academica> listarAcademica() throws SQLException {
         return academicaDao.getAllAcademicas();
     }
